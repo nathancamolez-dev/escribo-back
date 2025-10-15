@@ -4,4 +4,14 @@ import { env } from '../env'
 const supabaseUrl = env.SUPABASE_URL
 const supabaseKey = env.SUPABASE_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+export function createSupabaseClient(userAccessToken: string) {
+  const supabase = createClient(supabaseUrl, supabaseKey, {
+    global: {
+      headers: {
+        Authorization: `Bearer ${userAccessToken}`,
+      },
+    },
+  })
+
+  return supabase
+}

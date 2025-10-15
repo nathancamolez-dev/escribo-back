@@ -7,6 +7,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { cunstomerInfo } from './http/customer-info'
 import { newCustomer } from './http/new-customer'
 
 const app = fastify()
@@ -26,6 +27,16 @@ app.register(fastifySwagger, {
       title: 'Escribo API',
       version: '1.0.0',
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [{ bearerAuth: [] }],
   },
   transform: jsonSchemaTransform,
 })
@@ -35,6 +46,7 @@ app.register(fastifySwaggerUi, {
 })
 
 app.register(newCustomer)
+app.register(cunstomerInfo)
 
 app
   .listen({ port: 3333 })

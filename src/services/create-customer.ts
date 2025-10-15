@@ -16,6 +16,7 @@ export async function createCustomer({
     await supabaseAdmin.auth.admin.createUser({
       email,
       password,
+      email_confirm: true, // just for this version of testing
     })
 
   if (signUpError || !data.user) {
