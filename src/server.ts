@@ -7,6 +7,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { newCustomer } from './http/new-customer'
 
 const app = fastify()
 
@@ -32,6 +33,8 @@ app.register(fastifySwagger, {
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
+
+app.register(newCustomer)
 
 app
   .listen({ port: 3333 })
