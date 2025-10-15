@@ -9,6 +9,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { cunstomerInfo } from './http/customer-info'
 import { newCustomer } from './http/new-customer'
+import { newProduct } from './http/new-product'
 
 const app = fastify()
 
@@ -47,6 +48,7 @@ app.register(fastifySwaggerUi, {
 
 app.register(newCustomer)
 app.register(cunstomerInfo)
+app.register(newProduct)
 
 app
   .listen({ port: 3333 })

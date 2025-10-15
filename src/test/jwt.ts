@@ -11,5 +11,5 @@ export async function getJwtForTest(email: string, password: string) {
   if (error) {
     throw error
   }
-  return data.session?.refresh_token
+  return data.session?.access_token
 }
