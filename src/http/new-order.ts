@@ -1,5 +1,5 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { orderProduct } from '../services/order-product'
 
 export const newOrder: FastifyPluginAsyncZod = async app => {
@@ -15,7 +15,7 @@ export const newOrder: FastifyPluginAsyncZod = async app => {
         body: z.object({
           productIds: z.array(
             z.object({
-              productId: z.string().uuid(),
+              productId: z.string().uuid({ message: 'Invalid UUID' }),
               quantity: z.number(),
             })
           ),

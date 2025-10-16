@@ -1,5 +1,5 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export const exportOrderCsv: FastifyPluginAsyncZod = async app => {
   app.get(
@@ -12,7 +12,7 @@ export const exportOrderCsv: FastifyPluginAsyncZod = async app => {
           authorization: z.string(),
         }),
         params: z.object({
-          orderId: z.string().uuid(),
+          orderId: z.string().uuid({ message: 'Invalid UUID' }),
         }),
       },
     },
