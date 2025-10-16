@@ -1,4 +1,4 @@
-import { prisma } from '../lib/prisma'
+import { randomUUID } from 'crypto'
 import { createSupabaseClient } from '../lib/supabaseClient'
 
 interface CreateProductInput {
@@ -9,13 +9,6 @@ interface CreateProductInput {
   userAccessToken: string
 }
 
-interface Product {
-  name: string
-  description: string
-  price: number
-  stock: number
-}
-
 export async function createProduct({
   name,
   description,
@@ -24,27 +17,42 @@ export async function createProduct({
   userAccessToken,
 }: CreateProductInput) {
   const supabaseUser = createSupabaseClient(userAccessToken)
+  const {
+    data: { user },
+  } = await supabaseUser.auth.getUser()
+
+  console.log('User logado', user)
 
   const { data: admin, error } = await supabaseUser
     .from('admins')
     .select('*')
-    .single()
+    .eq('id', user?.id)
 
   if (error) {
     throw error
   }
+
+  console.log('É pra não ter nada', admin)
+
   if (!admin) {
     throw new Error('Is not admin')
   }
-  const product = await prisma.product.create({
-    data: {
+  const { data, error: productError } = await supabaseUser
+    .from('products')
+    .insert({
+      id: randomUUID(),
       name,
       description,
       price,
       stock,
-    },
-  })
+    })
+    .select()
 
+  const product = data?.[0]
+
+  if (!product && productError) {
+    throw productError
+  }
   return {
     name: product.name,
     stock: product.stock,

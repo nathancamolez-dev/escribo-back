@@ -8,7 +8,9 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 import { cunstomerInfo } from './http/customer-info'
+import { loginRoute } from './http/login-route'
 import { newCustomer } from './http/new-customer'
+import { newOrder } from './http/new-order'
 import { newProduct } from './http/new-product'
 
 const app = fastify()
@@ -46,9 +48,11 @@ app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
 
+app.register(loginRoute)
 app.register(newCustomer)
 app.register(cunstomerInfo)
 app.register(newProduct)
+app.register(newOrder)
 
 app
   .listen({ port: 3333 })

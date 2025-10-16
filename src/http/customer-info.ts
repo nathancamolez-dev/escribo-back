@@ -25,11 +25,7 @@ export const cunstomerInfo: FastifyPluginAsyncZod = async app => {
 
       const jwt = rawJwt.replace(/^Bearer\s+/i, '')
 
-      console.log(jwt)
-
       const customer = await viewCustomerData(String(jwt))
-
-      console.log(request.headers)
 
       reply.status(200).send({
         email: customer.email,

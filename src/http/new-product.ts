@@ -1,7 +1,6 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod/mini'
 import { createProduct } from '../services/create-product'
-import { getJwtForTest } from '../test/jwt'
 
 export const newProduct: FastifyPluginAsyncZod = async app => {
   app.post(
@@ -43,8 +42,6 @@ export const newProduct: FastifyPluginAsyncZod = async app => {
 
       const jwt = rawJwt.replace(/^Bearer\s+/i, '')
 
-      console.log(await getJwtForTest('nate@emai.com', '123'))
-
       const product = await createProduct({
         name,
         description,
@@ -52,8 +49,6 @@ export const newProduct: FastifyPluginAsyncZod = async app => {
         stock,
         userAccessToken: jwt,
       })
-
-      console.log(request.headers)
 
       reply.status(201).send({
         name: product.name,
