@@ -7,11 +7,13 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { exportOrderCsv } from './http/csv-export'
 import { cunstomerInfo } from './http/customer-info'
 import { loginRoute } from './http/login-route'
 import { newCustomer } from './http/new-customer'
 import { newOrder } from './http/new-order'
 import { newProduct } from './http/new-product'
+import { getOrderDetailById } from './http/order-details'
 
 const app = fastify()
 
@@ -53,6 +55,8 @@ app.register(newCustomer)
 app.register(cunstomerInfo)
 app.register(newProduct)
 app.register(newOrder)
+app.register(exportOrderCsv)
+app.register(getOrderDetailById)
 
 app
   .listen({ port: 3333 })

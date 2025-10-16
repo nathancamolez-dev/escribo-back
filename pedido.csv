@@ -1,0 +1,4 @@
+Cliente,Email,Pedido ID,Status,Produto,Preço Unitário,Quantidade,Subtotal
+string,123@email.com,45fa4f61-2921-49a9-a680-54f628c4e53c,pending,Produto2,10.00,3,30.00
+string,123@email.com,45fa4f61-2921-49a9-a680-54f628c4e53c,pending,Produto-1,90.99,3,272.97
+,,,,TOTAL,,,302.97
