@@ -17,26 +17,7 @@ export async function createProduct({
   userAccessToken,
 }: CreateProductInput) {
   const supabaseUser = createSupabaseClient(userAccessToken)
-  const {
-    data: { user },
-  } = await supabaseUser.auth.getUser()
 
-  console.log('User logado', user)
-
-  const { data: admin, error } = await supabaseUser
-    .from('admins')
-    .select('*')
-    .eq('id', user?.id)
-
-  if (error) {
-    throw error
-  }
-
-  console.log('É pra não ter nada', admin)
-
-  if (!admin) {
-    throw new Error('Is not admin')
-  }
   const { data, error: productError } = await supabaseUser
     .from('products')
     .insert({

@@ -33,8 +33,18 @@ export const newOrder: FastifyPluginAsyncZod = async app => {
       const jwt = rawJwt.replace(/^Bearer\s+/i, '')
       const { productIds } = request.body
 
-      const order = await orderProduct({ productIds, userAccessToken: jwt })
-      console.log(order)
+      const { order, orderItems } = await orderProduct({
+        productIds,
+        userAccessToken: jwt,
+      })
+
+      reply.status(201).send({
+        message: 'Order created',
+        order: {
+          order,
+          orderItems,
+        },
+      })
     }
   )
 }
